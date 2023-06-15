@@ -23,6 +23,10 @@ const routes: Routes = [
     path: '**',
     component: NotFoundComponent,
   },
+  {
+    path: 'manage-clips',
+    redirectTo: 'manage',
+  },
 ];
 
 @NgModule({
