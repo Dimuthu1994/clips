@@ -9,12 +9,15 @@ import { v4 as uuid } from 'uuid';
   styleUrls: ['./upload.component.css'],
 })
 export class UploadComponent {
-  isDragover = false;
-
-  constructor(private storage: AngularFireStorage) {}
-
   file: File | null = null;
   nextStep = false;
+  isDragover = false;
+  showAlert = false;
+  alertColor = 'blue';
+  alertMsg = 'Please wait clip is being uploaded.';
+  inSubmission = false;
+
+  constructor(private storage: AngularFireStorage) {}
 
   title = new FormControl('', {
     validators: [Validators.required, Validators.minLength(3)],
@@ -38,6 +41,11 @@ export class UploadComponent {
   }
 
   uploadFile() {
+    this.showAlert = true;
+    this.alertColor = 'blue';
+    this.alertMsg = 'Please wait clip is being uploaded.';
+    this.inSubmission = true;
+
     const clipFileName = uuid();
     const clipPath = `clips/${clipFileName}.mp4`;
 
