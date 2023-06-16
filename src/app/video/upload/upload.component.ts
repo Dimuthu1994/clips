@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 export class UploadComponent {
   isDragover = false;
   file: File | null = null;
+  nextStep = false;
 
   storeFile($event: Event) {
     this.isDragover = false;
@@ -16,5 +17,6 @@ export class UploadComponent {
     if (!this.file || this.file.type !== 'video/mp4') {
       return;
     }
+    this.nextStep = true;
   }
 }
