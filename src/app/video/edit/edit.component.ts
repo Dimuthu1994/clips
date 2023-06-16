@@ -1,15 +1,31 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
 import { ModalService } from 'src/app/services/modal.service';
 import IClip from 'src/app/models/clips';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
 })
-export class EditComponent implements OnInit, OnDestroy {
+export class EditComponent implements OnInit, OnDestroy, OnChanges {
   @Input() activeClip: IClip | null = null;
+
+  clipID = new FormControl('', {
+    nonNullable: true,
+  });
+
   constructor(private modal: ModalService) {}
+
+  title = new FormControl('', {
+    validators: [Validators.required, Validators.minLength(3)],
+    nonNullable: true,
+  });
+
+  editForm = new FormGroup({
+    title: this.title,
+    id: this.clipID,
+  });
 
   ngOnInit(): void {
     this.modal.register('editClip');
@@ -17,5 +33,13 @@ export class EditComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.modal.unregister('editClip');
+  }
+
+  ngOnChanges() {
+    if (!this.activeClip) {
+      return;
+    }
+    this.clipID.setValue(this.activeClip.docID as string);
+    this.title.setValue(this.activeClip.title);
   }
 }
