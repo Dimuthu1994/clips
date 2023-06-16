@@ -16,6 +16,7 @@ export class UploadComponent {
   alertColor = 'blue';
   alertMsg = 'Please wait clip is being uploaded.';
   inSubmission = false;
+  percentage = 0;
 
   constructor(private storage: AngularFireStorage) {}
 
@@ -49,6 +50,9 @@ export class UploadComponent {
     const clipFileName = uuid();
     const clipPath = `clips/${clipFileName}.mp4`;
 
-    this.storage.upload(clipPath, this.file);
+    const task = this.storage.upload(clipPath, this.file);
+    task.percentageChanges().subscribe((progress) => {
+      this.percentage = (progress as number) / 100;
+    });
   }
 }
