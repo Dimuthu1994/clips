@@ -29,6 +29,7 @@ export class UploadComponent implements OnDestroy {
   showPercentage = false;
   user: firebase.User | null = null;
   task?: AngularFireUploadTask;
+  screenshots: string[] = [];
 
   constructor(
     private storage: AngularFireStorage,
@@ -63,6 +64,7 @@ export class UploadComponent implements OnDestroy {
     if (!this.file || this.file.type !== 'video/mp4') {
       return;
     }
+    this.screenshots = await this.ffmpegService.getScreenshots(this.file);
 
     await this.ffmpegService.getScreenshots(this.file);
 
