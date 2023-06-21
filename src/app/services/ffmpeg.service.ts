@@ -16,6 +16,7 @@ export class FfmpegService {
     if (this.isReady) {
       return;
     }
+    await this.ffmpeg.load();
     this.isReady = true;
   }
 }
