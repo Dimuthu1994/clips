@@ -48,7 +48,12 @@
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div
               *ngFor="let ss of screenshots"
-              class="border-8 cursor-pointer border-green-400"
+              [ngClass]="{
+                'border-green-400': ss === selectedSS,
+                'border-transparent': ss !== selectedSS
+              }"
+              class="border-8 cursor-pointer"
+              (click)="selectedSS = ss"
             >
               <img [src]="ss | safeURL" />
             </div>
