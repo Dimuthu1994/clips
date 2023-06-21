@@ -38,7 +38,7 @@ export class ClipService {
         }
         const query = this.clipsCollection.ref
           .where('uid', '==', user.uid)
-          .orderBy('timestap', sort === '1' ? 'desc' : 'asc');
+          .orderBy('timestamp', sort === '1' ? 'desc' : 'asc');
 
         return query.get();
       }),
