@@ -90,6 +90,6 @@ export class ClipService {
         ...doc.data(),
       });
     });
-    this.pendingReq = true;
+    this.pendingReq = false;
   }
 }
