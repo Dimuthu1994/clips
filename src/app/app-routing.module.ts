@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ClipComponent } from './clip/clip.component';
 import { ClipService } from './services/clip.service';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,15 @@ const routes: Routes = [
     resolve: {
       clip: ClipService,
     },
+  },
+  {
+    path: '', // dahboard/manage
+    loadChildren: async () =>
+      (await import('./video/video.module')).VideoModule,
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
   },
 ];
 
